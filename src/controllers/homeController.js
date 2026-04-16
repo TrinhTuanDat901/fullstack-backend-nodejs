@@ -1,6 +1,5 @@
 const connection = require('../config/database');
-const { get } = require('../routes/web');
-const {getAllUsers, getUserById} = require('../services/CRUDService')
+const {getAllUsers, getUserById, updateUserById, deleteUserById} = require('../services/CRUDService')
 
 const getHomePage = async (req, res) => {
     //res.send('Hello World!')
@@ -66,13 +65,18 @@ const getUpdatePage = async (req, res) => {
 }
 
 const postUpdateUser = async (req, res) => {
-    let id = req.body.userId;
-    let {email, name, city} = req.body;
-    
-    let [rows, fields] = await connection.query(`update Users set email = ?, name = ?, city = ? where id = ?`, [email, name, city, id]);
+    let {userId, email, name, city} = req.body;
+    let user = await updateUserById(userId, email, name, city);
 
     //res.send('User updated successfully!');
     res.redirect('/'); // sau khi update xong sẽ redirect về trang chủ để hiển thị lại danh sách user đã được update
+}
+
+const deleteUser = async (req, res) => {
+    let userId = req.body.userId;
+    console.log(req.body); 
+    await deleteUserById(userId);
+    res.redirect('/');
 }
 
 module.exports = {
@@ -82,5 +86,6 @@ module.exports = {
     createNewUser,
     getCreatePage,
     getUpdatePage,
-    postUpdateUser
+    postUpdateUser,
+    deleteUser
 }

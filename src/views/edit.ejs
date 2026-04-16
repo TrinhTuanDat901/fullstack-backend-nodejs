@@ -11,30 +11,35 @@
     <!-- <%= JSON.stringify(user) %> -->
     <div class="topnav">
         <a href="/">Home</a>
-        <a href="/create" >Create User</a>
+        <a href="/create">Create User</a>
     </div>
     <div class="form-add-new">
         <form method="POST" action="/update-user">
             <fieldset>
                 <legend>Update User</legend>
                 <input type="hidden" name="userId" value="<%= user.id %>">
-                
+
                 <div class="input-group">
                     <label>Email: </label>
-                    <input type="text" id="emailId" name="email" value="<%= user.email %>"/>
+                    <input type="text" id="emailId" name="email" value="<%= user.email %>" />
                 </div>
                 <div class="input-group">
                     <label>Name: </label>
-                    <input type="text" id="nameId" name="name" value="<%= user.name %>"/>
+                    <input type="text" id="nameId" name="name" value="<%= user.name %>" />
                 </div>
                 <div class="input-group">
                     <label>City: </label>
-                    <input type="text" id="cityId" name="city" value="<%= user.city %>"/>
+                    <input type="text" id="cityId" name="city" value="<%= user.city %>" />
                 </div>
 
                 <button type="submit">Submit</button>
                 <button type="reset">Reset</button>
             </fieldset>
+        </form>
+
+        <form method="POST" action="/delete-user" style="display: inline-block;">
+            <input type="hidden" name="userId" value="<%= user.id %>">
+            <button type="submit" class="delete-btn">Delete</button>
         </form>
     </div>
 </body>
