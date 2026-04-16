@@ -3,30 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Page</title>
+    <title>Update Page</title>
     <link rel="stylesheet" href="/css/home.css">
 </head>
 
 <body>
+    <!-- <%= JSON.stringify(user) %> -->
     <div class="topnav">
         <a href="/">Home</a>
-        <a href="/create" class="active">Create User</a>
+        <a href="/create" >Create User</a>
     </div>
     <div class="form-add-new">
-        <form method="POST" action="create-user">
+        <form method="POST" action="/update-user">
             <fieldset>
-                <legend>Information</legend>
+                <legend>Update User</legend>
+                <input type="hidden" name="userId" value="<%= user.id %>">
+                
                 <div class="input-group">
                     <label>Email: </label>
-                    <input type="text" id="emailId" name="email"/>
+                    <input type="text" id="emailId" name="email" value="<%= user.email %>"/>
                 </div>
                 <div class="input-group">
                     <label>Name: </label>
-                    <input type="text" id="nameId" name="name"/>
+                    <input type="text" id="nameId" name="name" value="<%= user.name %>"/>
                 </div>
                 <div class="input-group">
                     <label>City: </label>
-                    <input type="text" id="cityId" name="city"/>
+                    <input type="text" id="cityId" name="city" value="<%= user.city %>"/>
                 </div>
 
                 <button type="submit">Submit</button>

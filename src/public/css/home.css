@@ -92,3 +92,7 @@ th, td {
 }
 
 tr:hover {background-color: gray;}
+
+.d-none {
+    display: none;
+}

@@ -1,7 +1,6 @@
 const connection = require('../config/database');
 const { get } = require('../routes/web');
-
-const {getAllUsers} = require('../services/CRUDService')
+const {getAllUsers, getUserById} = require('../services/CRUDService')
 
 const getHomePage = async (req, res) => {
     //res.send('Hello World!')
@@ -48,8 +47,8 @@ const createNewUser = async (req, res) => {
     //     }
     // );
 
-    let [results, fields] = await connection.query('insert into Users (email, name, city) values (?, ?, ?)', [email, name, city])
-    console.log(">>> rows:", results);
+    let [rows, fields] = await connection.query('insert into Users (email, name, city) values (?, ?, ?)', [email, name, city])
+    console.log(">>> rows:", rows);
     res.send('Create new user succeed!')
 }
 
@@ -58,10 +57,30 @@ const getCreatePage = (req, res) => {
     return res.render('create.ejs');
 }
 
+// User redirect into update page
+const getUpdatePage = async (req, res) => {
+
+    const userId = req.params.userId;
+    let user = await getUserById(userId);
+    res.render('edit.ejs', {user : user}); //bên trái là tên biến truyền vào view, bên phải là giá trị của biến đó
+}
+
+const postUpdateUser = async (req, res) => {
+    let id = req.body.userId;
+    let {email, name, city} = req.body;
+    
+    let [rows, fields] = await connection.query(`update Users set email = ?, name = ?, city = ? where id = ?`, [email, name, city, id]);
+
+    //res.send('User updated successfully!');
+    res.redirect('/'); // sau khi update xong sẽ redirect về trang chủ để hiển thị lại danh sách user đã được update
+}
+
 module.exports = {
     getHomePage,
     getABC,
     getFrog,
     createNewUser,
-    getCreatePage
+    getCreatePage,
+    getUpdatePage,
+    postUpdateUser
 }
